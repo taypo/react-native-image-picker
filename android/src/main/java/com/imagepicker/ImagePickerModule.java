@@ -615,7 +615,7 @@ public class ImagePickerModule extends ReactContextBaseJavaModule implements Act
       File path = Environment.getExternalStoragePublicDirectory(
               Environment.DIRECTORY_PICTURES);
       if(!imagePath.isEmpty()) {
-        path = new File(path.getPath() + File.pathSeparator + imagePath);
+        path = new File(path.getPath() + File.separator + imagePath);
       }
       File f = new File(path, filename);
 
