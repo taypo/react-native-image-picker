@@ -67,6 +67,7 @@ public class ImagePickerModule extends ReactContextBaseJavaModule implements Act
   private Boolean forceAngle = false;
   private int videoQuality = 1;
   private int videoDurationLimit = 0;
+  private String imagePath = "";
   WritableMap response;
 
   public ImagePickerModule(ReactApplicationContext reactContext) {
@@ -611,8 +612,13 @@ public class ImagePickerModule extends ReactContextBaseJavaModule implements Act
     if (tmpImage && forcePictureDirectory != true) {
       return new File(mReactContext.getCacheDir(), filename);
     } else {
-      File path = Environment.getExternalStoragePublicDirectory(
-              Environment.DIRECTORY_PICTURES);
+      File path;
+      if(imagePath.isEmpty()) {
+        path = Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES);
+      } else {
+        path = new File(imagePath);
+      }
       File f = new File(path, filename);
 
       try {
@@ -670,6 +676,10 @@ public class ImagePickerModule extends ReactContextBaseJavaModule implements Act
     tmpImage = true;
     if (options.hasKey("storageOptions")) {
       tmpImage = false;
+      ReadableMap storageOptions = options.getMap("storageOptions");
+      if(storageOptions.hasKey("path")) {
+        imagePath = storageOptions.getString("path");
+      }
     }
     allowEditing = false;
     if (options.hasKey("allowsEditing")) {
