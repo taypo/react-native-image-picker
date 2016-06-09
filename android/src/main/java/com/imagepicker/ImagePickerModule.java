@@ -612,12 +612,10 @@ public class ImagePickerModule extends ReactContextBaseJavaModule implements Act
     if (tmpImage && forcePictureDirectory != true) {
       return new File(mReactContext.getCacheDir(), filename);
     } else {
-      File path;
-      if(imagePath.isEmpty()) {
-        path = Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_PICTURES);
-      } else {
-        path = new File(imagePath);
+      File path = Environment.getExternalStoragePublicDirectory(
+              Environment.DIRECTORY_PICTURES);
+      if(!imagePath.isEmpty()) {
+        path = new File(path.getPath() + File.pathSeparator + imagePath);
       }
       File f = new File(path, filename);
 
